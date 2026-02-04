@@ -107,7 +107,7 @@ runs:
           repo="$GITHUB_REPOSITORY"
         fi
         if [ -z "$token" ]; then
-          token="$GITHUB_TOKEN"
+          token="${GITHUB_TOKEN:-}"
         fi
         if [ -z "$ver" ] || [ "$ver" = "latest" ]; then
           api="https://api.github.com/repos/$repo/releases/latest"

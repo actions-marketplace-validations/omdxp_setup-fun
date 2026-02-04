@@ -49,5 +49,4 @@ fun -version
 - `-outf`: Generate .c output file (optional, disabled by default).
 - `-ast`: Print AST nodes (optional, disabled by default).
 - `--`: All following args are passed to the compiled program.
-```
 
