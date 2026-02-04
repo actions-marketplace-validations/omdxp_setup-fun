@@ -50,3 +50,15 @@ fun -version
 - `-ast`: Print AST nodes (optional, disabled by default).
 - `--`: All following args are passed to the compiled program.
 
+## Compiler overrides
+
+You can override the default C compiler with environment variables:
+
+- `FUN_CC`: Overrides the compiler executable.
+- `FUN_CC_ARGS`: Extra arguments appended to the compiler command.
+
+Default compiler selection:
+
+- Linux/macOS: `gcc`
+- Windows: MSVC `cl`
+
