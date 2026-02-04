@@ -5,9 +5,9 @@ Downloads a Fun release bundle and adds the `fun` binary to `PATH`.
 ## Inputs
 
 - `version`: Release tag (e.g. `v1.2.3`) or `latest` (default: `latest`).
-- `repo`: GitHub repo in `owner/name` format (default: current repository).
-- `token`: GitHub token for API requests (default: `github.token`).
-- `install-dir`: Install directory (default: `${{ runner.temp }}/fun`).
+- `repo`: GitHub repo in `owner/name` format (default: `omdxp/fun`; if blank, falls back to `$GITHUB_REPOSITORY`).
+- `token`: GitHub token for API requests (default: empty; if blank, falls back to `$GITHUB_TOKEN`/`${{ github.token }}`).
+- `install-dir`: Install prefix passed to `install.sh --prefix` on Linux/macOS, and MSI extraction root on Windows (default: empty; if blank, uses `${{ runner.temp }}/fun`).
 
 ## Outputs
 
