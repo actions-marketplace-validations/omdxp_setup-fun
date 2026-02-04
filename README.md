@@ -28,6 +28,7 @@ jobs:
         with:
           version: latest
       - run: fun -version
+```
 
 ## Fun CLI usage
 
