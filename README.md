@@ -30,35 +30,23 @@ jobs:
       - run: fun -version
 ```
 
-## Fun CLI usage
+Pinning a specific release instead of tracking `latest`:
 
+```yaml
+      - uses: omdxp/setup-fun@v1
+        with:
+          version: v0.45.0
 ```
-fun -in <input_file> [-fmt | -fmt-all] [-out <output_file>] [-no-exec] [-outf] [-ast] [-help] [-- <program args...>]
-fun -version
-```
 
-### Options
+## CLI usage
 
-- `-help`: Show the help message.
-- `-version`: Print version and exit.
-- `-in <file>`: Input file to compile (required).
-- `-fmt`: Format the input file in-place (optional).
-- `-fmt-all`: Format the input file and all locally imported modules (optional).
-- `-out <file>`: Output file (optional, defaults to input filename with `.c` extension).
-- `-no-exec`: Disable automatic compilation and execution (optional, execution enabled by default).
-- `-outf`: Generate .c output file (optional, disabled by default).
-- `-ast`: Print AST nodes (optional, disabled by default).
-- `--`: All following args are passed to the compiled program.
+Run `fun -help` for the flags and subcommands supported by the version you installed. Full documentation lives in the [compiler repository](https://github.com/omdxp/fun).
 
 ## Compiler overrides
 
-You can override the default C compiler with environment variables:
+The generated C is built with a host C compiler, which you can override on a runner:
 
 - `FUN_CC`: Overrides the compiler executable.
 - `FUN_CC_ARGS`: Extra arguments appended to the compiler command.
 
-Default compiler selection:
-
-- Linux/macOS: `gcc`
-- Windows: MSVC `cl`
-
+Defaults are `gcc` on Linux/macOS and MSVC `cl` on Windows.
