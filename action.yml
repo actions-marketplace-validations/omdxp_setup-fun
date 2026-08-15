@@ -118,7 +118,7 @@ runs:
         if [ -n "$token" ]; then
           auth=( -H "Authorization: Bearer $token" )
         fi
-        json=$(curl -fsSL -H "Accept: application/vnd.github+json" "${auth[@]}" "$api")
+        json=$(curl -fsSL -H "Accept: application/vnd.github+json" "${auth[@]+"${auth[@]}"}" "$api")
         tag=$(JSON="$json" python3 -c 'import json,os; data=json.loads(os.environ.get("JSON","{}") or "{}"); print(data.get("tag_name",""))')
         if [ -z "$tag" ]; then
           echo "Failed to resolve release tag" >&2
@@ -199,7 +199,18 @@ runs:
         $archive = Join-Path $env:RUNNER_TEMP $env:FUN_ASSET_NAME
         Invoke-WebRequest -Uri $env:FUN_ASSET_URL -OutFile $archive
         $install = $env:FUN_INSTALL_DIR
-        msiexec /a $archive /qn INSTALLFOLDER="$install\fun" TARGETDIR="$install"
+
+        $msiArgs = @(
+          "/a", "`"$archive`"",
+          "/qn",
+          "INSTALLFOLDER=`"$install\fun`"",
+          "TARGETDIR=`"$install`""
+        )
+        $proc = Start-Process -FilePath "msiexec.exe" -ArgumentList $msiArgs -Wait -PassThru
+        if ($proc.ExitCode -ne 0) {
+          throw "msiexec failed with exit code $($proc.ExitCode)"
+        }
+
         $funExe = Get-ChildItem -Path $install -Recurse -Filter fun.exe | Select-Object -First 1
         if (-not $funExe) { throw "fun.exe not found after extraction" }
         $funRoot = Split-Path -Path $funExe.FullName -Parent | Split-Path
